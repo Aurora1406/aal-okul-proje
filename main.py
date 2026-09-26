@@ -153,3 +153,10 @@ def ana_sayfa():
         with open("anamenu.html", "r", encoding="utf-8") as f:
             return f.read()
     return "Anamenu dosyası bulunamadı!"
+
+@app.get("/admin.html", response_class=HTMLResponse)
+def admin_sayfa():
+    if os.path.exists("admin.html"):
+        with open("admin.html", "r", encoding="utf-8") as f:
+            return f.read()
+    return "Admin dosyası bulunamadı!"
