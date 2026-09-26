@@ -1,9 +1,10 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-import pyodbc
 import shutil
+import sqlite3
 import os
 
 app = FastAPI()
@@ -21,12 +22,41 @@ UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
-DB_CONN_STR = (
-    "Driver={ODBC Driver 17 for SQL Server};"
-    "Server=.\\SQLEXPRESS;"
-    "Database=OkulWeb;"
-    "Trusted_Connection=yes;"
-)
+# SQLite Veritabanı Dosyası
+DB_FILE = "okul.db"
+
+# Veritabanı ve tabloları otomatik oluşturan fonksiyon
+def veritabani_baslat():
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    
+    # Randevular tablosu
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS Randevular (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            AdSoyad TEXT,
+            Tarih TEXT,
+            Konu TEXT,
+            KayitZamani TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    
+    # Duyurular tablosu
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS Duyurular (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            Baslik TEXT,
+            Icerik TEXT,
+            Tarih TEXT,
+            GorselYolu TEXT
+        )
+    """)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+# Uygulama ayağa kalkarken tabloları otomatik oluştur
+veritabani_baslat()
 
 class Randevu(BaseModel):
     isim: str
@@ -40,7 +70,7 @@ class AdminLogin(BaseModel):
 @app.post("/api/randevu-kaydet")
 def randevu_kaydet(randevu: Randevu):
     try:
-        conn = pyodbc.connect(DB_CONN_STR)
+        conn = sqlite3.connect(DB_FILE)
         cursor = conn.cursor()
         cursor.execute(
             "INSERT INTO Randevular (AdSoyad, Tarih, Konu) VALUES (?, ?, ?)",
@@ -63,7 +93,7 @@ def admin_giris(veri: AdminLogin):
 @app.get("/api/randevulari-getir")
 def randevulari_getir():
     try:
-        conn = pyodbc.connect(DB_CONN_STR)
+        conn = sqlite3.connect(DB_FILE)
         cursor = conn.cursor()
         cursor.execute("SELECT ID, AdSoyad, Tarih, Konu, KayitZamani FROM Randevular ORDER BY KayitZamani DESC")
         rows = cursor.fetchall()
@@ -74,7 +104,6 @@ def randevulari_getir():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# --- YENİ: DUYURU EKLEME API'Sİ (Görsel Destekli) ---
 @app.post("/api/duyuru-ekle")
 async def duyuru_ekle(
     baslik: str = Form(...),
@@ -91,7 +120,7 @@ async def duyuru_ekle(
                 shutil.copyfileobj(gorsel.file, buffer)
             gorsel_yolu = f"/uploads/{dosya_adi}"
 
-        conn = pyodbc.connect(DB_CONN_STR)
+        conn = sqlite3.connect(DB_FILE)
         cursor = conn.cursor()
         cursor.execute(
             "INSERT INTO Duyurular (Baslik, Icerik, Tarih, GorselYolu) VALUES (?, ?, ?, ?)",
@@ -104,11 +133,10 @@ async def duyuru_ekle(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# --- YENİ: DUYURULARI LİSTELEME API'Sİ ---
 @app.get("/api/duyurulari-getir")
 def duyurulari_getir():
     try:
-        conn = pyodbc.connect(DB_CONN_STR)
+        conn = sqlite3.connect(DB_FILE)
         cursor = conn.cursor()
         cursor.execute("SELECT ID, Baslik, Icerik, Tarih, GorselYolu FROM Duyurular ORDER BY Tarih DESC")
         rows = cursor.fetchall()
@@ -119,22 +147,19 @@ def duyurulari_getir():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# --- YENİ: DUYURU SİLME API'Sİ ---
 @app.delete("/api/duyuru-sil/{duyuru_id}")
 def duyuru_sil(duyuru_id: int):
     try:
-        conn = pyodbc.connect(DB_CONN_STR)
+        conn = sqlite3.connect(DB_FILE)
         cursor = conn.cursor()
         
-        # Önce silinecek duyurunun görseli var mı kontrol edelim (Dosyayı sunucudan da silmek için)
         cursor.execute("SELECT GorselYolu FROM Duyurular WHERE ID = ?", (duyuru_id,))
         row = cursor.fetchone()
         if row and row[0]:
-            dosya_yolu = row[0].lstrip("/") # Baştaki / işaretini kaldır
+            dosya_yolu = row[0].lstrip("/")
             if os.path.exists(dosya_yolu):
                 os.remove(dosya_yolu)
                 
-        # Veritabanından duyuruyu sil
         cursor.execute("DELETE FROM Duyurular WHERE ID = ?", (duyuru_id,))
         conn.commit()
         cursor.close()
@@ -143,10 +168,6 @@ def duyuru_sil(duyuru_id: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-from fastapi.responses import HTMLResponse
-import os
-
-# Ana dizine girildiğinde anamenu.html dosyasını göster
 @app.get("/", response_class=HTMLResponse)
 def ana_sayfa():
     if os.path.exists("anamenu.html"):

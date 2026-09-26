@@ -1,5 +1,4 @@
 fastapi
 uvicorn
 pydantic
-pyodbc
 python-multipart
