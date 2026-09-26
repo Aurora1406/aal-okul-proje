@@ -142,3 +142,14 @@ def duyuru_sil(duyuru_id: int):
         return {"mesaj": "Duyuru başarıyla silindi."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+from fastapi.responses import HTMLResponse
+import os
+
+# Ana dizine girildiğinde anamenu.html dosyasını göster
+@app.get("/", response_class=HTMLResponse)
+def ana_sayfa():
+    if os.path.exists("anamenu.html"):
+        with open("anamenu.html", "r", encoding="utf-8") as f:
+            return f.read()
+    return "Anamenu dosyası bulunamadı!"
