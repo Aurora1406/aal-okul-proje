@@ -25,49 +25,56 @@
     </script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #000; }
+        body { font-family: 'Inter', sans-serif; background-color: #090d16; color: #f3f4f6; }
         ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: #555; }
-        ::-webkit-scrollbar-thumb:hover { background: #888; }
+        ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+        /* Arka Plan Okul Fotoğrafı Header Efekti */
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(5, 7, 12, 0.75), rgba(9, 13, 22, 0.95)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop'); /* Varsayılan veya yüklenen görsel */
+            background-size: cover;
+            background-position: center;
+        }
 
         .blob {
-            position: fixed; filter: blur(90px); border-radius: 50%; opacity: 0.5;
-            animation-iteration-count: infinite; animation-direction: alternate; animation-timing-function: ease-in-out; z-index: 0;
+            position: fixed; filter: blur(100px); border-radius: 50%; opacity: 0.3;
+            animation-iteration-count: infinite; animation-direction: alternate; animation-timing-function: ease-in-out; z-index: 0; pointer-events: none;
         }
-        .blob-1 { width: 50vw; height: 50vw; background: radial-gradient(circle, #6b7280 0%, #111827 100%); top: -15%; left: -10%; animation: float1 14s infinite alternate; }
-        .blob-2 { width: 40vw; height: 40vw; background: radial-gradient(circle, #9ca3af 0%, #1f2937 100%); bottom: -20%; right: -10%; animation: float2 18s infinite alternate; }
-        .blob-3 { width: 35vw; height: 35vw; background: radial-gradient(circle, #4b5563 0%, #030712 100%); top: 30%; left: 30%; animation: float3 22s infinite alternate; }
+        .blob-1 { width: 45vw; height: 45vw; background: radial-gradient(circle, #2563eb 0%, #090d16 100%); top: -10%; left: -10%; animation: float1 14s infinite alternate; }
+        .blob-2 { width: 40vw; height: 40vw; background: radial-gradient(circle, #4f46e5 0%, #090d16 100%); bottom: -15%; right: -10%; animation: float2 18s infinite alternate; }
         
-        @keyframes float1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(8vw, 8vh) scale(1.1); } }
-        @keyframes float2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-10vw, -8vh) scale(1.2); } }
-        @keyframes float3 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-5vw, 10vh) scale(0.9); } }
+        @keyframes float1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(6vw, 6vh) scale(1.1); } }
+        @keyframes float2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-8vw, -6vh) scale(1.15); } }
 
-        .animate-fade-up { opacity: 0; animation: fadeUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .delay-1 { animation-delay: 0.2s; } .delay-2 { animation-delay: 0.6s; } .delay-3 { animation-delay: 1s; }
-        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(40px); filter: blur(10px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
+        .animate-fade-up { opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.3s; } .delay-3 { animation-delay: 0.5s; }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
 
         /* SPA Geçişleri için Sınıflar */
         .view-section { transition: opacity 0.4s ease, transform 0.4s ease; }
-        .fade-out { opacity: 0; transform: translateY(-20px); pointer-events: none; position: absolute; width: 100%; visibility: hidden; }
+        .fade-out { opacity: 0; transform: translateY(-15px); pointer-events: none; position: absolute; width: 100%; visibility: hidden; }
         .fade-in { opacity: 1; transform: translateY(0); pointer-events: auto; position: relative; visibility: visible; }
         
-        table th, table td { border-color: rgba(255,255,255,0.1) !important; }
+        table th, table td { border-color: rgba(255,255,255,0.08) !important; }
     </style>
 </head>
-<body class="bg-black text-gray-200">
+<body class="bg-[#090d16] text-gray-200">
 
-    <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
+    <div class="blob blob-1"></div><div class="blob blob-2"></div>
 
-    <header class="relative w-full h-screen overflow-hidden flex items-center justify-center z-10">
-        <div class="relative z-10 flex flex-col items-center text-center px-4 w-full">
-            <p class="animate-fade-up delay-1 text-gray-400 uppercase tracking-[0.4em] text-sm md:text-base font-semibold mb-6">Geleceği Aydınlatan Köklü Miras</p>
-            <h1 class="animate-fade-up delay-2 text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter mb-12 leading-none">ANKARA<br>ANADOLU LİSESİ</h1>
-            <div class="animate-fade-up delay-3 flex flex-col sm:flex-row gap-6 mt-4">
-                <button onclick="toggleView('view-bilgi')" class="border border-white/30 backdrop-blur-sm text-white px-10 py-4 uppercase text-sm tracking-widest font-bold hover:bg-white hover:text-black transition-colors duration-500 rounded">
-                    Bilgi Al
+    <header class="relative w-full h-screen overflow-hidden flex items-center justify-center z-10 hero-bg">
+        <div class="relative z-10 flex flex-col items-center text-center px-4 w-full max-w-5xl mx-auto">
+            <span class="animate-fade-up delay-1 bg-blue-500/10 border border-blue-500/30 text-blue-400 px-4 py-1.5 rounded-full uppercase tracking-[0.3em] text-xs font-bold mb-6 backdrop-blur-md">Geleceği Aydınlatan Köklü Miras</span>
+            <h1 class="animate-fade-up delay-2 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight mb-8 leading-tight drop-shadow-lg">
+                ANKARA <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">ANADOLU LİSESİ</span>
+            </h1>
+            <div class="animate-fade-up delay-3 flex flex-col sm:flex-row gap-4 mt-2">
+                <button onclick="toggleView('view-bilgi')" class="bg-blue-600 hover:bg-blue-500 text-white border border-blue-500/50 px-8 py-3.5 uppercase text-xs tracking-widest font-bold transition-all duration-300 rounded-xl shadow-lg shadow-blue-600/20">
+                    Okulumuzu Keşfet
                 </button>
-                <button onclick="document.getElementById('randevu').scrollIntoView()" class="bg-white text-black border border-white px-10 py-4 uppercase text-sm tracking-widest font-bold hover:bg-gray-300 transition-colors duration-500 rounded">
+                <button onclick="document.getElementById('randevu').scrollIntoView({behavior: 'smooth'})" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md px-8 py-3.5 uppercase text-xs tracking-widest font-bold transition-all duration-300 rounded-xl">
                     Hızlı Randevu
                 </button>
             </div>
@@ -75,27 +82,29 @@
     </header>
 
     <!-- ANA KONTEYNER -->
-    <div class="max-w-6xl mx-auto bg-white/5 backdrop-blur-xl shadow-2xl min-h-screen border border-white/10 relative z-20 md:mb-16 rounded-2xl overflow-hidden">
+    <div class="max-w-6xl mx-auto bg-slate-900/60 backdrop-blur-2xl shadow-2xl min-h-screen border border-white/10 relative z-20 md:-mt-24 md:mb-16 rounded-3xl overflow-hidden">
         
-        <div class="bg-black/40 text-gray-400 py-3 px-6 flex justify-between items-center text-xs border-b border-white/10 uppercase font-semibold">
-            <div>T.C. MİLLİ EĞİTİM BAKANLIĞI</div>
+        <div class="bg-slate-950/80 text-gray-400 py-3 px-8 flex justify-between items-center text-xs border-b border-white/10 uppercase font-semibold tracking-wider">
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> T.C. MİLLİ EĞİTİM BAKANLIĞI</div>
             <div class="hidden md:block">0 312 341 27 81 | Zübeyde Hanım Mah. Altındağ</div>
         </div>
 
-        <nav class="bg-transparent border-b border-white/10 sticky top-0 z-40 shadow-sm backdrop-blur-md">
-            <div class="px-8 py-5 flex justify-between items-center">
-                <div class="flex items-center gap-4 cursor-pointer group" onclick="toggleView('view-home'); window.scrollTo(0,0)">
-                    <i class="fa-solid fa-building-columns text-3xl text-white"></i>
+        <nav class="bg-slate-900/80 border-b border-white/10 sticky top-0 z-40 backdrop-blur-xl">
+            <div class="px-8 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3 cursor-pointer group" onclick="toggleView('view-home'); window.scrollTo(0,0)">
+                    <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-building-columns text-lg"></i>
+                    </div>
                     <div>
-                        <h2 class="font-bold text-xl text-white uppercase tracking-wide leading-none">Ankara</h2>
-                        <h3 class="font-semibold text-sm text-gray-400 uppercase tracking-widest leading-none mt-1">Anadolu Lisesi</h3>
+                        <h2 class="font-bold text-base text-white uppercase tracking-wider leading-none">Ankara</h2>
+                        <h3 class="font-semibold text-xs text-blue-400 uppercase tracking-widest leading-none mt-1">Anadolu Lisesi</h3>
                     </div>
                 </div>
                 <div class="hidden md:flex space-x-8 text-gray-300 font-semibold uppercase text-xs tracking-widest">
-                    <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('gundem').scrollIntoView(), 100)" class="hover:text-white transition-colors">Gündem</button>
-                    <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('kadro').scrollIntoView(), 100)" class="hover:text-white transition-colors">Kadro</button>
-                    <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('randevu').scrollIntoView(), 100)" class="hover:text-white transition-colors">Randevu</button>
-                    <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('iletisim').scrollIntoView(), 100)" class="hover:text-white transition-colors">İletişim</button>
+                    <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('gundem').scrollIntoView({behavior: 'smooth'}), 100)" class="hover:text-blue-400 transition-colors">Gündem</button>
+                    <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('kadro').scrollIntoView({behavior: 'smooth'}), 100)" class="hover:text-blue-400 transition-colors">Kadro</button>
+                    <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('randevu').scrollIntoView({behavior: 'smooth'}), 100)" class="hover:text-blue-400 transition-colors">Randevu</button>
+                    <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('iletisim').scrollIntoView({behavior: 'smooth'}), 100)" class="hover:text-blue-400 transition-colors">İletişim</button>
                 </div>
             </div>
         </nav>
@@ -105,12 +114,14 @@
             
             <!-- Gündem Section -->
             <section id="gundem" class="py-20 px-8 border-b border-white/10">
-                <h3 class="text-3xl font-bold text-white uppercase border-l-4 border-white pl-4 tracking-wider mb-12">Gündem ve Duyurular</h3>
-                <div id="duyuru-listesi" class="space-y-12">
+                <h3 class="text-2xl font-bold text-white uppercase border-l-4 border-blue-500 pl-4 tracking-wider mb-10">Gündem ve Duyurular</h3>
+                <div id="duyuru-listesi" class="space-y-8">
                     
                     <!-- Kayıt Evrakları -->
-                    <article class="bg-white/5 border border-white/10 p-8 rounded-xl backdrop-blur-sm">
-                        <h4 class="text-xl font-bold text-white mb-4 uppercase tracking-wide border-b border-white/10 pb-4">2026-2027 Eğitim Öğretim Yılı Kayıt Evrakları</h4>
+                    <article class="bg-slate-950/40 border border-white/10 p-8 rounded-2xl backdrop-blur-sm shadow-xl">
+                        <h4 class="text-lg font-bold text-white mb-4 uppercase tracking-wide border-b border-white/10 pb-4 flex items-center gap-3">
+                            <i class="fa-solid fa-bullhorn text-blue-400"></i> 2026-2027 Eğitim Öğretim Yılı Kayıt Evrakları
+                        </h4>
                         <div class="text-sm text-gray-300 leading-relaxed grid md:grid-cols-2 gap-8 mt-6">
                             <div>
                                 <p class="mb-4 text-gray-400">Okulumuzda okumayı hak kazanan öğrencilerimiz için <strong class="text-white">kesin kayıtlar 15/08/2026 tarihinde 10.00-14.30 saatleri arasında</strong> yapılacaktır. Sınıf sayıları en fazla 40 kişi ile sınırlıdır.</p>
@@ -121,37 +132,37 @@
                                     <li>3 adet iadeli taahhütlü posta pulu & 3 top fotokopi kağıdı</li>
                                 </ul>
                             </div>
-                            <div class="bg-black/30 p-5 rounded-lg border border-white/5">
-                                <h5 class="text-white font-bold mb-3 uppercase tracking-widest text-xs">Kıyafet ve Zaman Yönetmeliği</h5>
-                                <p class="mb-2"><span class="text-gray-500">Kıyafet:</span> Gri polo yaka lacoste tişört ve siyah kanvas pantolon. Kış için okul siyah sweat ve montu.</p>
-                                <p><span class="text-gray-500">Zaman:</span> Sabah ders başlangıcı 08.15 - Çıkış 15.20</p>
+                            <div class="bg-blue-950/20 p-5 rounded-xl border border-blue-500/20">
+                                <h5 class="text-blue-400 font-bold mb-3 uppercase tracking-widest text-xs">Kıyafet ve Zaman Yönetmeliği</h5>
+                                <p class="mb-2"><span class="text-gray-400">Kıyafet:</span> Gri polo yaka lacoste tişört ve siyah kanvas pantolon. Kış için okul siyah sweat ve montu.</p>
+                                <p><span class="text-gray-400">Zaman:</span> Sabah ders başlangıcı 08.15 - Çıkış 15.20</p>
                             </div>
                         </div>
                     </article>
 
                     <!-- Zaman Çizelgesi Tablosu -->
-                    <article class="bg-white/5 border border-white/10 p-8 rounded-xl backdrop-blur-sm">
-                        <h4 class="text-xl font-bold text-white mb-6 uppercase tracking-wide border-b border-white/10 pb-4">Eğitim Öğretim Yılı Zaman Çizelgesi</h4>
-                        <div class="overflow-x-auto">
+                    <article class="bg-slate-950/40 border border-white/10 p-8 rounded-2xl backdrop-blur-sm shadow-xl">
+                        <h4 class="text-lg font-bold text-white mb-6 uppercase tracking-wide border-b border-white/10 pb-4">Eğitim Öğretim Yılı Zaman Çizelgesi</h4>
+                        <div class="overflow-x-auto rounded-xl border border-white/5">
                             <table class="w-full text-left text-sm text-gray-300 border-collapse">
-                                <thead class="text-xs text-white uppercase bg-black/40 border-b border-white/10">
+                                <thead class="text-xs text-white uppercase bg-slate-900 border-b border-white/10">
                                     <tr><th class="px-6 py-4">Sabah</th><th class="px-6 py-4">Giriş</th><th class="px-6 py-4">Çıkış</th></tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-b border-white/5"><td class="px-6 py-3 font-bold text-white">1. DERS</td><td class="px-6 py-3">08.15</td><td class="px-6 py-3">08.55</td></tr>
-                                    <tr class="border-b border-white/5 bg-white/5"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">08.55</td><td class="px-6 py-3">09.05</td></tr>
+                                    <tr class="border-b border-white/5 bg-white/[0.02]"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">08.55</td><td class="px-6 py-3">09.05</td></tr>
                                     <tr class="border-b border-white/5"><td class="px-6 py-3 font-bold text-white">2. DERS</td><td class="px-6 py-3">09.05</td><td class="px-6 py-3">09.45</td></tr>
-                                    <tr class="border-b border-white/5 bg-white/5"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">09.45</td><td class="px-6 py-3">09.55</td></tr>
+                                    <tr class="border-b border-white/5 bg-white/[0.02]"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">09.45</td><td class="px-6 py-3">09.55</td></tr>
                                     <tr class="border-b border-white/5"><td class="px-6 py-3 font-bold text-white">3. DERS</td><td class="px-6 py-3">09.55</td><td class="px-6 py-3">10.35</td></tr>
-                                    <tr class="border-b border-white/5 bg-white/5"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">10.35</td><td class="px-6 py-3">10.45</td></tr>
+                                    <tr class="border-b border-white/5 bg-white/[0.02]"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">10.35</td><td class="px-6 py-3">10.45</td></tr>
                                     <tr class="border-b border-white/5"><td class="px-6 py-3 font-bold text-white">4. DERS</td><td class="px-6 py-3">10.45</td><td class="px-6 py-3">11.25</td></tr>
-                                    <tr class="border-b border-white/5 bg-white/5"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">11.25</td><td class="px-6 py-3">11.35</td></tr>
+                                    <tr class="border-b border-white/5 bg-white/[0.02]"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">11.25</td><td class="px-6 py-3">11.35</td></tr>
                                     <tr class="border-b border-white/5"><td class="px-6 py-3 font-bold text-white">5. DERS</td><td class="px-6 py-3">11.35</td><td class="px-6 py-3">12.15</td></tr>
-                                    <tr class="border-b border-white/10 bg-black/30"><td class="px-6 py-4 font-bold text-white uppercase tracking-widest">ÖĞLE ARASI</td><td class="px-6 py-4 font-bold text-white">12.15</td><td class="px-6 py-4 font-bold text-white">13.00</td></tr>
+                                    <tr class="border-b border-white/10 bg-blue-950/30"><td class="px-6 py-4 font-bold text-white uppercase tracking-widest">ÖĞLE ARASI</td><td class="px-6 py-4 font-bold text-white">12.15</td><td class="px-6 py-4 font-bold text-white">13.00</td></tr>
                                     <tr class="border-b border-white/5"><td class="px-6 py-3 font-bold text-white">6. DERS</td><td class="px-6 py-3">13.00</td><td class="px-6 py-3">13.40</td></tr>
-                                    <tr class="border-b border-white/5 bg-white/5"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">13.40</td><td class="px-6 py-3">13.50</td></tr>
+                                    <tr class="border-b border-white/5 bg-white/[0.02]"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">13.40</td><td class="px-6 py-3">13.50</td></tr>
                                     <tr class="border-b border-white/5"><td class="px-6 py-3 font-bold text-white">7. DERS</td><td class="px-6 py-3">13.50</td><td class="px-6 py-3">14.30</td></tr>
-                                    <tr class="border-b border-white/5 bg-white/5"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">14.30</td><td class="px-6 py-3">14.40</td></tr>
+                                    <tr class="border-b border-white/5 bg-white/[0.02]"><td class="px-6 py-3 text-gray-400">TENEFÜS</td><td class="px-6 py-3">14.30</td><td class="px-6 py-3">14.40</td></tr>
                                     <tr class="border-b border-white/5"><td class="px-6 py-3 font-bold text-white">8. DERS</td><td class="px-6 py-3">14.40</td><td class="px-6 py-3">15.20</td></tr>
                                 </tbody>
                             </table>
@@ -159,11 +170,11 @@
                     </article>
 
                     <!-- Sorumluluk Sınavı Tablosu -->
-                    <article class="bg-white/5 border border-white/10 p-8 rounded-xl backdrop-blur-sm">
-                        <h4 class="text-xl font-bold text-white mb-6 uppercase tracking-wide border-b border-white/10 pb-4">Eylül Dönemi Sorumluluk Sınavları Takvimi</h4>
-                        <div class="overflow-x-auto max-h-[400px]">
+                    <article class="bg-slate-950/40 border border-white/10 p-8 rounded-2xl backdrop-blur-sm shadow-xl">
+                        <h4 class="text-lg font-bold text-white mb-6 uppercase tracking-wide border-b border-white/10 pb-4">Eylül Dönemi Sorumluluk Sınavları Takvimi</h4>
+                        <div class="overflow-x-auto max-h-[400px] rounded-xl border border-white/5">
                             <table class="w-full text-left text-sm text-gray-300 border-collapse relative">
-                                <thead class="text-xs text-white uppercase bg-black/80 border-b border-white/10 sticky top-0">
+                                <thead class="text-xs text-white uppercase bg-slate-900 border-b border-white/10 sticky top-0">
                                     <tr><th class="px-4 py-3">Sınav Adı</th><th class="px-4 py-3">Tarih</th><th class="px-4 py-3">Saat</th><th class="px-4 py-3">Yer</th></tr>
                                 </thead>
                                 <tbody>
@@ -187,39 +198,39 @@
 
             <!-- Kadro Section -->
             <section id="kadro" class="py-20 px-8 border-b border-white/10 relative">
-                <h3 class="text-3xl font-bold text-white uppercase border-l-4 border-white pl-4 tracking-wider mb-12">İdari Kadro ve PDR</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+                <h3 class="text-2xl font-bold text-white uppercase border-l-4 border-blue-500 pl-4 tracking-wider mb-10">İdari Kadro ve PDR</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
                     <!-- Personel -->
-                    <div class="bg-white/5 border border-white/10 p-6 text-center backdrop-blur-sm rounded-xl">
-                        <i class="fa-solid fa-user-tie text-4xl text-white/50 mb-4 block"></i>
-                        <h4 class="font-bold text-white text-md">Seyfi KAYIŞ</h4>
+                    <div class="bg-slate-950/40 border border-white/10 p-6 text-center backdrop-blur-sm rounded-2xl hover:border-blue-500/40 transition-all">
+                        <i class="fa-solid fa-user-tie text-3xl text-blue-400 mb-4 block"></i>
+                        <h4 class="font-bold text-white text-sm">Seyfi KAYIŞ</h4>
                         <p class="text-[10px] text-gray-400 font-bold mt-2 uppercase tracking-widest">Okul Müdürü</p>
                     </div>
-                    <div class="bg-white/5 border border-white/10 p-6 text-center backdrop-blur-sm rounded-xl">
-                        <i class="fa-solid fa-user text-4xl text-white/50 mb-4 block"></i>
-                        <h4 class="font-bold text-white text-md">Özlem KUL ATAK</h4>
+                    <div class="bg-slate-950/40 border border-white/10 p-6 text-center backdrop-blur-sm rounded-2xl hover:border-blue-500/40 transition-all">
+                        <i class="fa-solid fa-user text-3xl text-blue-400 mb-4 block"></i>
+                        <h4 class="font-bold text-white text-sm">Özlem KUL ATAK</h4>
                         <p class="text-[10px] text-gray-400 font-bold mt-2 uppercase tracking-widest">Müdür Yardımcısı</p>
                     </div>
-                    <div class="bg-white/5 border border-white/10 p-6 text-center backdrop-blur-sm rounded-xl">
-                        <i class="fa-solid fa-user text-4xl text-white/50 mb-4 block"></i>
-                        <h4 class="font-bold text-white text-md">Meral TAŞ</h4>
+                    <div class="bg-slate-950/40 border border-white/10 p-6 text-center backdrop-blur-sm rounded-2xl hover:border-blue-500/40 transition-all">
+                        <i class="fa-solid fa-user text-3xl text-blue-400 mb-4 block"></i>
+                        <h4 class="font-bold text-white text-sm">Meral TAŞ</h4>
                         <p class="text-[10px] text-gray-400 font-bold mt-2 uppercase tracking-widest">Müdür Yardımcısı</p>
                     </div>
-                    <div class="bg-white/5 border border-white/10 p-6 text-center backdrop-blur-sm rounded-xl">
-                        <i class="fa-solid fa-user text-4xl text-white/50 mb-4 block"></i>
-                        <h4 class="font-bold text-white text-md">Beyhan ALTINAY</h4>
+                    <div class="bg-slate-950/40 border border-white/10 p-6 text-center backdrop-blur-sm rounded-2xl hover:border-blue-500/40 transition-all">
+                        <i class="fa-solid fa-user text-3xl text-blue-400 mb-4 block"></i>
+                        <h4 class="font-bold text-white text-sm">Beyhan ALTINAY</h4>
                         <p class="text-[10px] text-gray-400 font-bold mt-2 uppercase tracking-widest">Müdür Yardımcısı</p>
                     </div>
-                    <div class="bg-white/5 border border-white/10 p-6 text-center backdrop-blur-sm rounded-xl">
-                        <i class="fa-solid fa-brain text-4xl text-white/50 mb-4 block"></i>
-                        <h4 class="font-bold text-white text-md">Yağmur ÖZKAN</h4>
-                        <p class="text-[10px] text-gray-400 font-bold mt-2 uppercase tracking-widest">Piskolojik Danışma / PDR</p>
+                    <div class="bg-slate-950/40 border border-white/10 p-6 text-center backdrop-blur-sm rounded-2xl hover:border-blue-500/40 transition-all">
+                        <i class="fa-solid fa-brain text-3xl text-blue-400 mb-4 block"></i>
+                        <h4 class="font-bold text-white text-sm">Yağmur ÖZKAN</h4>
+                        <p class="text-[10px] text-gray-400 font-bold mt-2 uppercase tracking-widest">Psk. Danışman / PDR</p>
                     </div>
                 </div>
 
                 <!-- Tüm Kadroyu Gör Butonu -->
                 <div class="text-center">
-                    <button onclick="toggleView('view-tam-kadro')" class="inline-flex items-center gap-3 border border-white/30 text-white px-10 py-4 uppercase text-xs tracking-widest font-bold hover:bg-white hover:text-black transition-all duration-300 rounded-lg">
+                    <button onclick="toggleView('view-tam-kadro')" class="inline-flex items-center gap-3 bg-white/5 border border-white/20 text-white px-8 py-3.5 uppercase text-xs tracking-widest font-bold hover:bg-blue-600 hover:border-blue-500 transition-all duration-300 rounded-xl">
                         <i class="fa-solid fa-users"></i> Tüm Eğitim Kadrosunu Gör
                     </button>
                 </div>
@@ -227,28 +238,28 @@
 
             <!-- Randevu Section -->
             <section id="randevu" class="py-24 px-8 border-b border-white/10">
-                <div class="mb-14 text-center max-w-3xl mx-auto">
-                    <h3 class="text-3xl font-bold uppercase mb-4 tracking-widest text-white">Randevu ve Görüşme Talebi</h3>
-                    <p class="text-gray-400 leading-relaxed text-sm">Formu doldurduğunuzda randevunuz sisteme kaydedilecektir.</p>
+                <div class="mb-12 text-center max-w-2xl mx-auto">
+                    <h3 class="text-2xl font-bold uppercase mb-3 tracking-widest text-white">Randevu ve Görüşme Talebi</h3>
+                    <p class="text-gray-400 text-sm">Formu doldurarak okul yönetimi ile görüşme randevusu oluşturabilirsiniz.</p>
                 </div>
-                <div class="max-w-4xl mx-auto bg-white/5 backdrop-blur-md p-10 border border-white/10 rounded-2xl shadow-2xl">
-                    <form id="randevu-form" class="space-y-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="max-w-3xl mx-auto bg-slate-950/60 backdrop-blur-xl p-8 md:p-10 border border-white/10 rounded-2xl shadow-2xl">
+                    <form id="randevu-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-xs font-bold text-gray-300 mb-3 uppercase tracking-wider">Ad Soyad</label>
-                                <input type="text" id="r-isim" required class="w-full px-5 py-3 border border-white/20 bg-transparent text-white focus:outline-none focus:border-white rounded-lg">
+                                <label class="block text-xs font-bold text-gray-300 mb-2 uppercase tracking-wider">Ad Soyad</label>
+                                <input type="text" id="r-isim" required class="w-full px-4 py-3 border border-white/20 bg-slate-900/50 text-white focus:outline-none focus:border-blue-500 rounded-xl text-sm transition-colors">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-300 mb-3 uppercase tracking-wider">Tarih</label>
-                                <input type="date" id="r-tarih" required class="w-full px-5 py-3 border border-white/20 bg-transparent text-white focus:outline-none focus:border-white rounded-lg [color-scheme:dark]">
+                                <label class="block text-xs font-bold text-gray-300 mb-2 uppercase tracking-wider">Tarih</label>
+                                <input type="date" id="r-tarih" required class="w-full px-4 py-3 border border-white/20 bg-slate-900/50 text-white focus:outline-none focus:border-blue-500 rounded-xl text-sm [color-scheme:dark] transition-colors">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-300 mb-3 uppercase tracking-wider">Görüşme Konusu</label>
-                            <textarea id="r-konu" required rows="4" class="w-full px-5 py-4 border border-white/20 bg-transparent text-white focus:outline-none focus:border-white rounded-lg" placeholder="Mesajınız..."></textarea>
+                            <label class="block text-xs font-bold text-gray-300 mb-2 uppercase tracking-wider">Görüşme Konusu</label>
+                            <textarea id="r-konu" required rows="4" class="w-full px-4 py-3 border border-white/20 bg-slate-900/50 text-white focus:outline-none focus:border-blue-500 rounded-xl text-sm transition-colors" placeholder="Mesajınız..."></textarea>
                         </div>
                         <div class="flex justify-end pt-2">
-                            <button type="submit" class="bg-white text-black px-12 py-4 font-bold uppercase tracking-widest hover:bg-gray-300 transition-colors rounded-lg text-sm">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-10 py-3.5 font-bold uppercase tracking-widest transition-colors rounded-xl text-xs shadow-lg shadow-blue-600/20">
                                 Randevu Oluştur
                             </button>
                         </div>
@@ -258,29 +269,29 @@
 
             <!-- İletişim Section -->
             <section id="iletisim" class="py-20 px-8">
-                <h3 class="text-3xl font-bold text-white uppercase border-l-4 border-white pl-4 tracking-wider mb-12">İletişim Bilgileri</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="bg-white/5 backdrop-blur-sm p-10 border border-white/10 rounded-2xl">
-                        <ul class="space-y-8 text-gray-300">
-                            <li class="flex items-start gap-5 border-b border-white/10 pb-6">
-                                <i class="fa-solid fa-map-pin text-white mt-1 text-2xl"></i>
+                <h3 class="text-2xl font-bold text-white uppercase border-l-4 border-blue-500 pl-4 tracking-wider mb-10">İletişim Bilgileri</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-slate-950/40 backdrop-blur-sm p-8 border border-white/10 rounded-2xl">
+                        <ul class="space-y-6 text-gray-300">
+                            <li class="flex items-start gap-4 border-b border-white/10 pb-5">
+                                <i class="fa-solid fa-map-pin text-blue-400 mt-1 text-xl"></i>
                                 <div>
-                                    <strong class="block text-white uppercase text-xs mb-2 font-bold tracking-widest">Adres</strong>
-                                    <span class="text-sm">Zübeyde Hanım Mah. 657 Cad. No: 1<br>Altındağ / ANKARA</span>
+                                    <strong class="block text-white uppercase text-xs mb-1 font-bold tracking-widest">Adres</strong>
+                                    <span class="text-sm text-gray-400">Zübeyde Hanım Mah. 657 Cad. No: 1<br>Altındağ / ANKARA</span>
                                 </div>
                             </li>
-                            <li class="flex items-start gap-5 border-b border-white/10 pb-6">
-                                <i class="fa-solid fa-phone text-white mt-1 text-2xl"></i>
+                            <li class="flex items-start gap-4 border-b border-white/10 pb-5">
+                                <i class="fa-solid fa-phone text-blue-400 mt-1 text-xl"></i>
                                 <div>
-                                    <strong class="block text-white uppercase text-xs mb-2 font-bold tracking-widest">Telefon & Belgegeçer</strong>
-                                    <span class="text-sm">0 312 341 27 81<br>Faks: 0 312 342 08 54</span>
+                                    <strong class="block text-white uppercase text-xs mb-1 font-bold tracking-widest">Telefon & Faks</strong>
+                                    <span class="text-sm text-gray-400">0 312 341 27 81<br>Faks: 0 312 342 08 54</span>
                                 </div>
                             </li>
-                            <li class="flex items-start gap-5">
-                                <i class="fa-solid fa-globe text-white mt-1 text-2xl"></i>
+                            <li class="flex items-start gap-4">
+                                <i class="fa-solid fa-globe text-blue-400 mt-1 text-xl"></i>
                                 <div>
-                                    <strong class="block text-white uppercase text-xs mb-2 font-bold tracking-widest">Web</strong>
-                                    <span class="text-sm">https://ankaraal.meb.k12.tr</span>
+                                    <strong class="block text-white uppercase text-xs mb-1 font-bold tracking-widest">Web</strong>
+                                    <span class="text-sm text-gray-400">https://ankaraal.meb.k12.tr</span>
                                 </div>
                             </li>
                         </ul>
@@ -296,7 +307,7 @@
                     <i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön
                 </button>
                 
-                <h3 class="text-4xl font-bold text-white uppercase tracking-tighter mb-10 border-b border-white/20 pb-6">Okulumuzun Tarihçesi</h3>
+                <h3 class="text-3xl font-bold text-white uppercase tracking-tighter mb-8 border-b border-white/10 pb-6">Okulumuzun Tarihçesi</h3>
                 
                 <div class="space-y-6 text-gray-300 leading-relaxed text-sm md:text-base font-medium">
                     <p>Okulumuzun bulunduğu binada 1971 -1972 öğretim yılında kurucu müdürlüğünü Nevzat Öner'in üstlendiği Atatürk Anadolu Lisesi öğretim hayatına başlamıştır. 1981 yılına kadar İngilizce, Almanca ve Fransızca bölümleri bir arada eğitim görmüştür.</p>
@@ -305,21 +316,21 @@
                     <p>Okulumuz, Okul Müdürü Mustafa Kahveci döneminde İngilizce ve Fransızca olarak iki dilde eğitim-öğretime geçiş yapmıştır. Halen İngilizce olarak eğitime devam etmektedir.</p>
                 </div>
 
-                <div class="mt-16 grid md:grid-cols-2 gap-8">
-                    <div class="bg-white/5 border border-white/10 p-8 rounded-xl backdrop-blur-sm">
-                        <h4 class="text-xl font-bold text-white mb-4 uppercase tracking-widest"><i class="fa-solid fa-flag text-gray-500 mr-2"></i> Vizyon</h4>
+                <div class="mt-16 grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-950/40 border border-white/10 p-8 rounded-2xl backdrop-blur-sm">
+                        <h4 class="text-lg font-bold text-white mb-3 uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-flag text-blue-400"></i> Vizyon</h4>
                         <p class="text-sm text-gray-400 leading-relaxed">Değişmeyen Tek Şeyin Değişim Olduğu Düşüncesinden Hareketle Toplum İçinde Verdiği Kaliteli Eğitim Ve Öğretim İle Bilinen, Tanınan, Bu Nedenle Kendi Türündeki Okullar İçinde İlk Sırada Tercih Edilen Bir Okul Olmak.</p>
                     </div>
-                    <div class="bg-white/5 border border-white/10 p-8 rounded-xl backdrop-blur-sm">
-                        <h4 class="text-xl font-bold text-white mb-4 uppercase tracking-widest"><i class="fa-solid fa-bullseye text-gray-500 mr-2"></i> Misyon</h4>
+                    <div class="bg-slate-950/40 border border-white/10 p-8 rounded-2xl backdrop-blur-sm">
+                        <h4 class="text-lg font-bold text-white mb-3 uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-bullseye text-blue-400"></i> Misyon</h4>
                         <p class="text-sm text-gray-400 leading-relaxed">Ankara Anadolu Lisesi Olarak; Bütün Paydaşlarının Bilgili, İlgi Ve Yeteneklerinin Farkında, Hedeflerine Ulaşmak İçin Doğru Yöntemleri Bilen, Nitelikli, Çağdaş, Hoşgörülü Ve Demokratik Bireyler Yetiştirmek İçin Varız.</p>
                     </div>
                 </div>
                 
-                <div class="mt-12 bg-black/40 border border-white/5 p-6 rounded-xl flex justify-between text-center divide-x divide-white/10 text-xs font-bold uppercase tracking-widest text-gray-400">
-                    <div class="px-4 w-1/3"><span class="block text-2xl text-white mb-1">1029</span> Öğrenci</div>
-                    <div class="px-4 w-1/3"><span class="block text-2xl text-white mb-1">54</span> Öğretmen</div>
-                    <div class="px-4 w-1/3"><span class="block text-2xl text-white mb-1">30</span> Derslik</div>
+                <div class="mt-12 bg-slate-950/60 border border-white/10 p-6 rounded-2xl flex justify-between text-center divide-x divide-white/10 text-xs font-bold uppercase tracking-widest text-gray-400">
+                    <div class="px-4 w-1/3"><span class="block text-2xl text-blue-400 font-black mb-1">1029</span> Öğrenci</div>
+                    <div class="px-4 w-1/3"><span class="block text-2xl text-blue-400 font-black mb-1">54</span> Öğretmen</div>
+                    <div class="px-4 w-1/3"><span class="block text-2xl text-blue-400 font-black mb-1">30</span> Derslik</div>
                 </div>
             </div>
         </div>
@@ -327,106 +338,106 @@
         <!-- EKRAN 3: TAM KADRO -->
         <div id="view-tam-kadro" class="view-section fade-out hidden py-20 px-10">
             <div class="max-w-5xl mx-auto">
-                <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('kadro').scrollIntoView(), 100)" class="mb-10 text-gray-400 hover:text-white transition-colors flex items-center gap-2 font-bold uppercase text-xs tracking-widest">
+                <button onclick="toggleView('view-home'); setTimeout(()=>document.getElementById('kadro').scrollIntoView({behavior: 'smooth'}), 100)" class="mb-10 text-gray-400 hover:text-white transition-colors flex items-center gap-2 font-bold uppercase text-xs tracking-widest">
                     <i class="fa-solid fa-arrow-left"></i> Geri Dön
                 </button>
                 
-                <h3 class="text-4xl font-bold text-white uppercase tracking-tighter mb-12 border-b border-white/20 pb-6">Eğitim Kadrosu</h3>
+                <h3 class="text-3xl font-bold text-white uppercase tracking-tighter mb-10 border-b border-white/10 pb-6">Eğitim Kadrosu</h3>
 
                 <!-- Matematik -->
-                <div class="mb-12">
-                    <h4 class="text-xl font-bold text-white mb-6 uppercase tracking-wider text-gray-400">Matematik</h4>
+                <div class="mb-10">
+                    <h4 class="text-lg font-bold text-blue-400 mb-4 uppercase tracking-wider">Matematik</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Hüsameddin YURDAGÜL</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Zümre Başkanı</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Ayça SUNMA MURATHAN</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Berna MERİ</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Deniz BEÇEÇ</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Diler ŞAHİN</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Erol FİŞNE</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Fatma ALTUNBAY</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Gazi ÖZTÜRK</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Hüsameddin YURDAGÜL</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Zümre Başkanı</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Ayça SUNMA MURATHAN</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Berna MERİ</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Deniz BEÇEÇ</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Diler ŞAHİN</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Erol FİŞNE</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Fatma ALTUNBAY</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Gazi ÖZTÜRK</h5></div>
                     </div>
                 </div>
 
                 <!-- Türk Dili ve Edebiyatı -->
-                <div class="mb-12">
-                    <h4 class="text-xl font-bold text-white mb-6 uppercase tracking-wider text-gray-400">Türk Dili ve Edebiyatı</h4>
+                <div class="mb-10">
+                    <h4 class="text-lg font-bold text-blue-400 mb-4 uppercase tracking-wider">Türk Dili ve Edebiyatı</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Bahar SERT</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Zümre Başkanı</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Duygu KUŞKAN</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Esra ERGEV</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Fatih Murat TEKBAŞ</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Halime AYDIN</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Hümeyya Arda ERYILMAZ</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Serkan ŞAKACI</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Sümeyye DEMİR</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Taner AKTAŞ</h5></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Ümmühan Kamile ÖNCÜ</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Bahar SERT</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Zümre Başkanı</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Duygu KUŞKAN</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Esra ERGEV</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Fatih Murat TEKBAŞ</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Halime AYDIN</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Hümeyya Arda ERYILMAZ</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Serkan ŞAKACI</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Sümeyye DEMİR</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Taner AKTAŞ</h5></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl flex items-center justify-center"><h5 class="text-white font-bold text-xs">Ümmühan Kamile ÖNCÜ</h5></div>
                     </div>
                 </div>
 
                 <!-- İngilizce & Yabancı Dil -->
-                <div class="mb-12">
-                    <h4 class="text-xl font-bold text-white mb-6 uppercase tracking-wider text-gray-400">Yabancı Dil</h4>
+                <div class="mb-10">
+                    <h4 class="text-lg font-bold text-blue-400 mb-4 uppercase tracking-wider">Yabancı Dil</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Hale GÜVEN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İng. Zümre Bşk.</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Esin TÜRKYILMAZ</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">İlirjana Elif YEŞİLGÜL</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Nagihan ALTUNBAY KAYA</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Özlem ÖZÜAK</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Melike BEŞİKÇİ ÖZEL</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Hüseyin AKIŞOĞLU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fransızca Zümre Bşk.</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Şeyda AYAZ TANIŞSEVEN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fransızca</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Huriye ESER</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Almanca</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Hale GÜVEN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İng. Zümre Bşk.</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Esin TÜRKYILMAZ</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">İlirjana Elif YEŞİLGÜL</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Nagihan ALTUNBAY KAYA</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Özlem ÖZÜAK</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Melike BEŞİKÇİ ÖZEL</h5><p class="text-[9px] text-gray-400 uppercase mt-1">İngilizce</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Hüseyin AKIŞOĞLU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fransızca Zümre Bşk.</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Şeyda AYAZ TANIŞSEVEN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fransızca</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Huriye ESER</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Almanca</p></div>
                     </div>
                 </div>
 
                 <!-- Fen Bilimleri -->
-                <div class="mb-12">
-                    <h4 class="text-xl font-bold text-white mb-6 uppercase tracking-wider text-gray-400">Fen Bilimleri</h4>
+                <div class="mb-10">
+                    <h4 class="text-lg font-bold text-blue-400 mb-4 uppercase tracking-wider">Fen Bilimleri</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Nabi GÜMÜŞOK</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fizik Zümre Bşk.</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Arife PARMAKSIZOĞLU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fizik</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">İzzet ÖZTÜRK</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fizik</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Ramazan KOÇ</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Kimya Zümre Bşk.</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Feyza ERASLAN COŞGUN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Kimya</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Meliha ARSLAN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Biyoloji</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Özcan KARAKUZU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Biyoloji</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Şafak KANTARCI</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Biyoloji</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Nabi GÜMÜŞOK</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fizik Zümre Bşk.</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Arife PARMAKSIZOĞLU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fizik</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">İzzet ÖZTÜRK</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Fizik</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Ramazan KOÇ</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Kimya Zümre Bşk.</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Feyza ERASLAN COŞGUN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Kimya</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Meliha ARSLAN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Biyoloji</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Özcan KARAKUZU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Biyoloji</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Şafak KANTARCI</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Biyoloji</p></div>
                     </div>
                 </div>
 
                 <!-- Sosyal Bilimler -->
-                <div class="mb-12">
-                    <h4 class="text-xl font-bold text-white mb-6 uppercase tracking-wider text-gray-400">Sosyal Bilimler</h4>
+                <div class="mb-10">
+                    <h4 class="text-lg font-bold text-blue-400 mb-4 uppercase tracking-wider">Sosyal Bilimler</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Birol ÖZTÜRK</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Tarih Zümre Bşk.</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Gülay ÇOK YAKUİ</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Tarih</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Kadir ŞAHİNLİ</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Tarih</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Hacı Yusuf EMİNOĞLU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Coğrafya</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Sevgi YAZCAN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Coğrafya</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Serpil ARSLAN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Felsefe Zümre Bşk.</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Zehra Hayal GÜNDOĞDU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Felsefe</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Kazım ÖZEN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Din K. Zümre Bşk.</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Hatice Şule ERSAMİN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Din Kültürü</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Yakup ŞAHİN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Din Kültürü</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Birol ÖZTÜRK</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Tarih Zümre Bşk.</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Gülay ÇOK YAKUİ</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Tarih</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Kadir ŞAHİNLİ</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Tarih</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Hacı Yusuf EMİNOĞLU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Coğrafya</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Sevgi YAZCAN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Coğrafya</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Serpil ARSLAN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Felsefe Zümre Bşk.</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Zehra Hayal GÜNDOĞDU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Felsefe</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Kazım ÖZEN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Din K. Zümre Bşk.</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Hatice Şule ERSAMİN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Din Kültürü</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Yakup ŞAHİN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Din Kültürü</p></div>
                     </div>
                 </div>
 
                 <!-- Yetenek & Sanat -->
-                <div class="mb-12">
-                    <h4 class="text-xl font-bold text-white mb-6 uppercase tracking-wider text-gray-400">Yetenek & Sanat</h4>
+                <div class="mb-10">
+                    <h4 class="text-lg font-bold text-blue-400 mb-4 uppercase tracking-wider">Yetenek & Sanat</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Cemil KOYUNCU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Beden Eğitimi</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Gülen GÜLAY</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Beden Eğitimi</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Selda GÜNGÖR</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Resim Zümre Bşk.</p></div>
-                        <div class="bg-white/5 border border-white/10 p-4 text-center rounded-lg"><h5 class="text-white font-bold text-sm">Vacip SAĞMAN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Müzik</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Cemil KOYUNCU</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Beden Eğitimi</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Gülen GÜLAY</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Beden Eğitimi</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Selda GÜNGÖR</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Resim Zümre Bşk.</p></div>
+                        <div class="bg-slate-950/40 border border-white/10 p-4 text-center rounded-xl"><h5 class="text-white font-bold text-xs">Vacip SAĞMAN</h5><p class="text-[9px] text-gray-400 uppercase mt-1">Müzik</p></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <footer class="bg-black/40 py-8 px-8 border-t border-white/10 text-center text-gray-500 text-xs font-semibold uppercase tracking-widest rounded-b-2xl">
+        <footer class="bg-slate-950/80 py-8 px-8 border-t border-white/10 text-center text-gray-500 text-xs font-semibold uppercase tracking-widest rounded-b-3xl">
             <p class="mb-2 text-gray-300 font-bold">T.C. Milli Eğitim Bakanlığı - Ankara Anadolu Lisesi</p>
             <p>© 2026 Tüm hakları saklıdır. Lise Bilgilendirme Platformu. Okulun Orjinal Sayfası DEĞİLDİR! Yapay Zeka Destekli İkincil Sayfadır. Detaylı Bilgi için @muusaabbb</p>
         </footer>
@@ -435,7 +446,6 @@
 
     <!-- JS Scripts -->
     <script>
-        // Sayfa açıldığında SQL'deki duyuruları ana sayfaya getir
         document.addEventListener('DOMContentLoaded', () => {
             fetch('/api/duyurulari-getir')
             .then(res => res.json())
@@ -445,15 +455,15 @@
                     duyuruKapsayici.innerHTML = ""; 
                     
                     data.duyurular.forEach(d => {
-                        let gorselHTML = d.gorselYolu ? `<img src="${d.gorselYolu}" class="w-full h-40 object-cover rounded-lg mb-4">` : '';
+                        let gorselHTML = d.gorselYolu ? `<img src="${d.gorselYolu}" class="w-full h-48 object-cover rounded-xl mb-4 border border-white/10">` : '';
                         
                         const duyuruKarti = `
-                            <article class="bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm rounded-xl flex flex-col justify-between">
+                            <article class="bg-slate-950/40 border border-white/10 p-8 hover:border-blue-500/40 transition-all duration-300 backdrop-blur-sm rounded-2xl flex flex-col justify-between shadow-xl">
                                 <div>
                                     ${gorselHTML}
-                                    <time class="text-xs font-bold text-gray-400 mb-4 block border-b border-white/10 pb-3 tracking-widest">${d.tarih}</time>
+                                    <time class="text-xs font-bold text-blue-400 mb-3 block border-b border-white/10 pb-3 tracking-widest">${d.tarih}</time>
                                     <h4 class="text-lg font-bold text-white mb-3">${d.baslik}</h4>
-                                    <p class="text-gray-400 mb-6 text-sm leading-relaxed">${d.icerik}</p>
+                                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">${d.icerik}</p>
                                 </div>
                             </article>
                         `;
@@ -464,7 +474,6 @@
             .catch(err => console.error("Duyurular yüklenemedi:", err));
         });
 
-        // Görünüm (SPA) Değiştirici
         function toggleView(targetId) {
             const views = document.querySelectorAll('.view-section');
             
@@ -504,9 +513,7 @@
                     
                     fetch('/api/randevu-kaydet', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
                     })
                     .then(response => response.json())
