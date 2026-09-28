@@ -171,7 +171,7 @@
                 formData.append('gorsel', gorselDosya);
             }
 
-            fetch('http://127.0.0.1:8000/api/duyuru-ekle', {
+            fetch('/api/duyuru-ekle', {
                 method: 'POST',
                 body: formData
             })
@@ -179,14 +179,14 @@
             .then(data => {
                 alert(data.mesaj);
                 document.getElementById('duyuru-form').reset();
-                duyurulariYukleAdmin(); // Tabloyu hemen güncelle
+                duyurulariYukleAdmin(); 
             })
             .catch(err => alert("Duyuru eklenirken hata oluştu!"));
         });
 
         // Yönetim Panelinde Duyuruları Listeleme
         function duyurulariYukleAdmin() {
-            fetch('http://127.0.0.1:8000/api/duyurulari-getir')
+            fetch('/api/duyurulari-getir')
             .then(res => res.json())
             .then(data => {
                 adminDuyuruTablo.innerHTML = "";
@@ -217,20 +217,20 @@
         // Duyuru Silme Fonksiyonu
         function duyuruSil(id) {
             if (confirm("Bu duyuruyu silmek istediğinize emin misiniz?")) {
-                fetch(`http://127.0.0.1:8000/api/duyuru-sil/${id}`, {
+                fetch(`/api/duyuru-sil/${id}`, {
                     method: 'DELETE'
                 })
                 .then(res => res.json())
                 .then(data => {
                     alert(data.mesaj);
-                    duyurulariYukleAdmin(); // Tabloyu yenile
+                    duyurulariYukleAdmin(); 
                 })
                 .catch(err => alert("Silme sırasında hata oluştu!"));
             }
         }
 
         function randevulariYukle() {
-            fetch('http://127.0.0.1:8000/api/randevulari-getir')
+            fetch('/api/randevulari-getir')
             .then(res => res.json())
             .then(data => {
                 tabloIcerik.innerHTML = "";
@@ -256,7 +256,7 @@
         }
 
         function cikisYap() {
-            dashboardBox.classList.add('hidden');
+            dashboardbox.classList.add('hidden');
             loginBox.classList.remove('hidden');
             document.getElementById('kullanici').value = '';
             document.getElementById('sifre').value = '';
