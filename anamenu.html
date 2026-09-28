@@ -107,7 +107,6 @@
             <section id="gundem" class="py-20 px-8 border-b border-white/10">
                 <h3 class="text-3xl font-bold text-white uppercase border-l-4 border-white pl-4 tracking-wider mb-12">Gündem ve Duyurular</h3>
                 <div id="duyuru-listesi" class="space-y-12">
-                <div class="space-y-12">
                     
                     <!-- Kayıt Evrakları -->
                     <article class="bg-white/5 border border-white/10 p-8 rounded-xl backdrop-blur-sm">
@@ -230,7 +229,7 @@
             <section id="randevu" class="py-24 px-8 border-b border-white/10">
                 <div class="mb-14 text-center max-w-3xl mx-auto">
                     <h3 class="text-3xl font-bold uppercase mb-4 tracking-widest text-white">Randevu ve Görüşme Talebi</h3>
-                    <p class="text-gray-400 leading-relaxed text-sm">Formu doldurduğunuzda cihazınızın e-posta uygulaması üzerinden yetkililere mesajınız hazırlanacaktır.</p>
+                    <p class="text-gray-400 leading-relaxed text-sm">Formu doldurduğunuzda randevunuz sisteme kaydedilecektir.</p>
                 </div>
                 <div class="max-w-4xl mx-auto bg-white/5 backdrop-blur-md p-10 border border-white/10 rounded-2xl shadow-2xl">
                     <form id="randevu-form" class="space-y-8">
@@ -438,16 +437,15 @@
     <script>
         // Sayfa açıldığında SQL'deki duyuruları ana sayfaya getir
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('http://127.0.0.1:8000/api/duyurulari-getir')
+            fetch('/api/duyurulari-getir')
             .then(res => res.json())
             .then(data => {
                 const duyuruKapsayici = document.getElementById('duyuru-listesi');
                 if (duyuruKapsayici && data.duyurular && data.duyurular.length > 0) {
-                    duyuruKapsayici.innerHTML = ""; // Örnek statik duyuruları temizle
+                    duyuruKapsayici.innerHTML = ""; 
                     
                     data.duyurular.forEach(d => {
-                        // Eğer admin panelinden görsel yüklendiyse resmi göster, yoksa gizle
-                        let gorselHTML = d.gorselYolu ? `<img src="http://127.0.0.1:8000${d.gorselYolu}" class="w-full h-40 object-cover rounded-lg mb-4">` : '';
+                        let gorselHTML = d.gorselYolu ? `<img src="${d.gorselYolu}" class="w-full h-40 object-cover rounded-lg mb-4">` : '';
                         
                         const duyuruKarti = `
                             <article class="bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm rounded-xl flex flex-col justify-between">
@@ -465,11 +463,11 @@
             })
             .catch(err => console.error("Duyurular yüklenemedi:", err));
         });
-       // Görünüm (SPA) Değiştirici
+
+        // Görünüm (SPA) Değiştirici
         function toggleView(targetId) {
             const views = document.querySelectorAll('.view-section');
             
-            // Tüm aktif pencereleri gizle
             views.forEach(view => {
                 if (!view.classList.contains('hidden') && view.id !== targetId) {
                     view.classList.replace('fade-in', 'fade-out');
@@ -479,7 +477,6 @@
                 }
             });
 
-            // Hedef pencereyi aç
             setTimeout(() => {
                 const targetView = document.getElementById(targetId);
                 if (targetView) {
@@ -499,15 +496,13 @@
                 randevuForm.addEventListener('submit', function(e) {
                     e.preventDefault(); 
                     
-                    // Formdaki verileri alıyoruz
                     const data = {
                         isim: document.getElementById('r-isim').value,
                         tarih: document.getElementById('r-tarih').value,
                         konu: document.getElementById('r-konu').value
                     };
                     
-                    // Python (FastAPI) sunucusuna gönderiyoruz
-                    fetch('http://127.0.0.1:8000/api/randevu-kaydet', {
+                    fetch('/api/randevu-kaydet', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -525,7 +520,7 @@
                     })
                     .catch(error => {
                         console.error('API Hatası:', error);
-                        alert("Sunucuya bağlanılamadı. Python sunucusunun çalıştığından emin olun.");
+                        alert("Sunucuya bağlanılamadı.");
                     });
                 });
             }
